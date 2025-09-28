@@ -1,0 +1,78 @@
+# ========== UNITY ==========
+
+# Pastas temporárias e de cache geradas pelo Unity
+/Library/
+/Temp/
+/Obj/
+/Build/
+/Builds/
+/Logs/
+/MemoryCaptures/
+
+# Outros arquivos e pastas gerados pelo Unity
+/Assets/AssetStoreTools*
+/Assets/Plugins/Editor/JetBrains*
+
+# Cache do sistema de entrada do Unity
+/InputSystem/Generated/
+
+# Configurações do Unity Cloud
+/UnityCloudBuild/
+
+# Auto build
+/AutoBuild/
+
+# Gerado por build pipeline
+/UserSettings/Layouts/
+/UserSettings/EditorUserBuildSettings.asset
+/UserSettings/EditorSnapSettings.asset
+
+# ========== VISUAL STUDIO & VS CODE ==========
+
+# VS Code
+.vscode/
+
+# Visual Studio
+.vs/
+
+# JetBrains Rider
+.idea/
+
+# Arquivos de solução e projeto (gerados automaticamente)
+*.sln
+*.csproj
+*.user
+*.unityproj
+*.pidb
+*.suo
+
+# DLLs e executáveis compilados
+*.dll
+*.exe
+
+# Arquivos de cache e debug
+*.pdb
+*.mdb
+
+# Diretórios do Visual Studio para build local
+/.vs/
+
+# ========== SISTEMA OPERACIONAL ==========
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# Linux
+*~
+
+# ========== GIT ==========
+
+# Ignora arquivos de merge temporários
+*.orig
+
+# Arquivos do Git LFS (caso use)
+*.lfs
