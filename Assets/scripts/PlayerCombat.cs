@@ -6,11 +6,15 @@ public class PlayerCombat : MonoBehaviour
     private InputSystem_Actions playerInput;
     private Animator animator;
 
-    //  Lógica do Combo 
     private int comboCounter = 0;
-    public float comboResetTime = 1.0f; 
+    public float comboResetTime = 1.0f;
     private float lastAttackTime;
-    
+
+    [Header("Configurações de Ataque")]
+    [SerializeField] private Transform attackPoint;
+    [SerializeField] private float attackRange = 0.5f;
+    [SerializeField] private int attackDamage = 20;
+    [SerializeField] private LayerMask enemyLayers;
 
     private void Awake()
     {
@@ -22,8 +26,6 @@ public class PlayerCombat : MonoBehaviour
     {
         playerInput.Player.Enable();
         playerInput.Player.Attack.performed += OnAttack;
-
- 
         playerInput.Player.Defend.performed += OnDefend;
         playerInput.Player.Defend.canceled += OnDefendReleased;
     }
@@ -32,13 +34,8 @@ public class PlayerCombat : MonoBehaviour
     {
         playerInput.Player.Disable();
         playerInput.Player.Attack.performed -= OnAttack;
-
         playerInput.Player.Defend.performed -= OnDefend;
         playerInput.Player.Defend.canceled -= OnDefendReleased;
-    }
-
-    void Update()
-    {
     }
 
     private void OnAttack(InputAction.CallbackContext context)
@@ -61,17 +58,39 @@ public class PlayerCombat : MonoBehaviour
         }
 
         lastAttackTime = Time.time;
+        PerformAttack();
     }
 
+    void PerformAttack()
+    {
+        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
+
+        foreach (Collider enemy in hitEnemies)
+        {
+            Health enemyHealth = enemy.GetComponent<Health>();
+            if (enemyHealth != null)
+            {
+                enemyHealth.TakeDamage(attackDamage);
+            }
+        }
+    }
 
     private void OnDefend(InputAction.CallbackContext context)
     {
-
         animator.SetBool("isDefending", true);
     }
 
     private void OnDefendReleased(InputAction.CallbackContext context)
     {
         animator.SetBool("isDefending", false);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null)
+            return;
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 }
