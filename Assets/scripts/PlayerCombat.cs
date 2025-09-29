@@ -10,7 +10,7 @@ public class PlayerCombat : MonoBehaviour
     private int comboCounter = 0;
     public float comboResetTime = 1.0f; 
     private float lastAttackTime;
-  
+    
 
     private void Awake()
     {
@@ -22,20 +22,23 @@ public class PlayerCombat : MonoBehaviour
     {
         playerInput.Player.Enable();
         playerInput.Player.Attack.performed += OnAttack;
+
+ 
+        playerInput.Player.Defend.performed += OnDefend;
+        playerInput.Player.Defend.canceled += OnDefendReleased;
     }
 
     private void OnDisable()
     {
         playerInput.Player.Disable();
         playerInput.Player.Attack.performed -= OnAttack;
+
+        playerInput.Player.Defend.performed -= OnDefend;
+        playerInput.Player.Defend.canceled -= OnDefendReleased;
     }
 
     void Update()
     {
-        if (Time.time - lastAttackTime > comboResetTime)
-        {
-            comboCounter = 0;
-        }
     }
 
     private void OnAttack(InputAction.CallbackContext context)
@@ -61,4 +64,14 @@ public class PlayerCombat : MonoBehaviour
     }
 
 
+    private void OnDefend(InputAction.CallbackContext context)
+    {
+
+        animator.SetBool("isDefending", true);
+    }
+
+    private void OnDefendReleased(InputAction.CallbackContext context)
+    {
+        animator.SetBool("isDefending", false);
+    }
 }
